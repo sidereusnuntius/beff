@@ -6,7 +6,7 @@ void double_capacity(Instructions*);
 
 Instructions* create() {
     Instructions* instruct = (Instructions*) malloc(sizeof(Instructions));
-    instruct->instructs_array = (char*) malloc(sizeof(char) * 2);
+    instruct->instructs_array = (char*) malloc(sizeof(char) * INITIAL_ARRAY_SIZE);
     instruct->capacity = INITIAL_ARRAY_SIZE;
     instruct->current_instruction = 0;
 
@@ -37,6 +37,10 @@ void destroy(Instructions *instructs) {
 void move(Instructions *instructs, int index) {
     instructs->current_instruction = index;
 }
+
+// =====================
+// |  STACK FUNCTIONS  | 
+// =====================
 
 void push(CallStack **stack, int index) {
     CallStack *temp = (CallStack*) malloc(sizeof(CallStack));
