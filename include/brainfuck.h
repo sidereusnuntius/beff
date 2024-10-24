@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include "structures.h"
 
 #define TAPE_SIZE           4096
@@ -16,8 +17,10 @@ typedef struct {
     unsigned char *tape;
     unsigned char *pointer;
     Instructions *instructs;
+    CallStack *stack;
 } EffMachine;
 
 EffMachine *init();
-void read_from_file(EffMachine*, FILE, char);
+void read_from_file(EffMachine*, FILE*, char);
 bool execute(EffMachine*);
+void destroy_machine(EffMachine*);

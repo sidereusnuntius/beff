@@ -29,7 +29,7 @@ void double_capacity(Instructions *instructs) {
     instructs->capacity *= 2;
 }
 
-void destroy(Instructions *instructs) {
+void destroy_instr_array(Instructions *instructs) {
     free(instructs->instructs_array);
     free(instructs);
 }

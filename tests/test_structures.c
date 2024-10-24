@@ -26,11 +26,13 @@ int main() {
     insert(instructs, 'i');
     insert(instructs, 'r');
     insert(instructs, 'e');
+
+    insert(instructs, ',');
     insert(instructs, '\0');
 
     printf("%s\n", instructs->instructs_array);
 
-    destroy(instructs);
+    destroy_instr_array(instructs);
 
     CallStack *stack = NULL;
     push(&stack, 1);

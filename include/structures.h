@@ -19,4 +19,4 @@ typedef struct {
 Instructions* create();
 void insert(Instructions*, char);
 void move(Instructions*, int);
-void destroy(Instructions*);
+void destroy_instr_array(Instructions*);
