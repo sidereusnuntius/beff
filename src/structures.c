@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "../include/structures.h"
@@ -29,12 +30,20 @@ void double_capacity(Instructions *instructs) {
     instructs->capacity *= 2;
 }
 
+char read_instruction(Instructions* instructs) {
+    char c = instructs->instructs_array[instructs->current_instruction++];
+    // putchar(c);
+    return c;
+}
+
+
 void destroy_instr_array(Instructions *instructs) {
     free(instructs->instructs_array);
     free(instructs);
 }
 
 void move(Instructions *instructs, int index) {
+    printf("Moving to %d\n", index);
     instructs->current_instruction = index;
 }
 
@@ -52,8 +61,12 @@ void push(CallStack **stack, int index) {
 }
 
 void pop(CallStack **stack) {
-    if (*stack == NULL)
-        return;
+    if (*stack == NULL) {
+        printf("Tried to pop the stack, but it's NULL.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("POP: %d\n", (*stack)->start);
     
     CallStack *temp = (*stack)->next;
 

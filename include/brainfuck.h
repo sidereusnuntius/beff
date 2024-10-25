@@ -2,8 +2,7 @@
 #include <stdbool.h>
 #include "structures.h"
 
-#define TAPE_SIZE           4096
-
+#define TAPE_SIZE           300000
 #define INCREMENT           '+'
 #define DECREMENT           '-'
 #define RIGHT_MOVE          '>'

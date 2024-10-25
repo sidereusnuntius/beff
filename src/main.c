@@ -16,7 +16,10 @@ int main() {
     read_from_file(machine, f, EOF);
 
     fclose(f);
-    printf("%s\n", machine->instructs->instructs_array);
+
+    while (execute(machine)) {
+        
+    }
 
     destroy_machine(machine);    
     return 0;

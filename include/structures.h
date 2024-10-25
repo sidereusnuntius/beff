@@ -18,5 +18,6 @@ typedef struct {
 
 Instructions* create();
 void insert(Instructions*, char);
+char read_instruction(Instructions*);
 void move(Instructions*, int);
 void destroy_instr_array(Instructions*);
