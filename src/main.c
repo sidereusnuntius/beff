@@ -3,19 +3,25 @@
 #include "../include/brainfuck.h"
 #include <limits.h>
 
-int main() {
-    EffMachine *machine = init();
+FILE *open_file(char *file_name) {
+    FILE *file_pointer = fopen(file_name, "r");
 
-    FILE *f = fopen("test.txt", "r");
-
-    if (f == NULL){
-         printf("Couldn't open file.");
+    if (file_pointer == NULL){
+         fprintf(stderr, "Couldn't open file.\n");
          exit(EXIT_FAILURE);
     }
+    return file_pointer;
+}
 
-    read_from_file(machine, f, EOF);
+int main(int argc, char *argv[]) {
+    if (argc == 1) {
+        fprintf(stderr, "No file given.\n");
+        exit(EXIT_FAILURE);
+    }
 
-    fclose(f);
+    EffMachine *machine = init();
+
+    read_from_file(machine, open_file(argv[1]), EOF);
 
     while (execute(machine)) {
         

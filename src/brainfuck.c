@@ -28,6 +28,8 @@ void read_from_file(EffMachine *machine, FILE *file, char end_char) {
     }
     insert(machine->instructs, '\0');
     machine->instructs->current_instruction = 0;
+
+    fclose(file);
 }
 
 void read_input(EffMachine *machine) {
