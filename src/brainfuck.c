@@ -33,8 +33,8 @@ void read_from_file(EffMachine *machine, FILE *file, char end_char) {
 void read_input(EffMachine *machine) {
     *machine->pointer = getchar();
     
-    char aux;
-    while ((aux = getchar()) != '\n' && aux != EOF);
+    // char aux;
+    // while ((aux = getchar()) != '\n' && aux != EOF);
 }
 
 void move_right(unsigned char *tape, unsigned char **pointer) {
@@ -54,10 +54,16 @@ void move_left(unsigned char *tape, unsigned char **pointer) {
 // BUG: it jumps to the first closing bracket it finds, not to the corresponding bracket.
 void read_until_closing_bracket(Instructions *instructs) {
     char c;
+    int bracket_counter = 0;
 
-    for (;(c = instructs->instructs_array[instructs->current_instruction]) != END_LOOP && c != '\0'; instructs->current_instruction++)
-        printf("%c ", instructs->instructs_array[instructs->current_instruction]);
-    putchar('\n');
+    for (;(c = instructs->instructs_array[instructs->current_instruction]) != '\0'; instructs->current_instruction++){
+        if (strchr("[]", c)){
+            (c == BEGIN_LOOP) ? bracket_counter++ : bracket_counter--;
+            if (bracket_counter < 0)
+                break;
+        }
+    }
+
     if (c == END_LOOP)
         instructs->current_instruction++;
 }
@@ -65,12 +71,10 @@ void read_until_closing_bracket(Instructions *instructs) {
 void begin_loop(EffMachine *machine) {
     if (!*machine->pointer) // Jumps past the corresponding ] if the value at the current cell is 0.
         read_until_closing_bracket(machine->instructs);
-    else{
-        printf("Pushing %d\n", machine->instructs->current_instruction);
+    else
         push(&machine->stack, machine->instructs->current_instruction);
         // Since current_instruction is increment inside the function read_instruction,
         // what is pushed into the stack is the index of the instruction that comes after the '['.
-    }
 }
 
 /* 
@@ -81,23 +85,16 @@ void begin_loop(EffMachine *machine) {
 //The programs tries to close the loop, but the stack is null.
 // Suggestion: Create a function that prints the entire stack.
 void end_loop(EffMachine *machine) {
-    // printf("%ld\n", *machine->pointer);
-    if (machine->stack == NULL)
-        printf("stack is null.\n");
-    
-    if (*machine->pointer){
+    if (*machine->pointer)
         move(machine->instructs, machine->stack->start);
-    }else{    
+    else
         pop(&machine->stack);
-    }
 }
 
 /*
     Executes the next instruction. Returns false if the program has ended.
 */
 bool execute(EffMachine *machine) {
-    printf("=======================\n");
-    printf("Current instruction: %d (%c)\n", machine->instructs->current_instruction, machine->instructs->instructs_array[machine->instructs->current_instruction]);
     char c;
     switch ((c = read_instruction(machine->instructs))) {
         case INCREMENT: (*machine->pointer)++; break;

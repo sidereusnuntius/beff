@@ -32,7 +32,6 @@ void double_capacity(Instructions *instructs) {
 
 char read_instruction(Instructions* instructs) {
     char c = instructs->instructs_array[instructs->current_instruction++];
-    // putchar(c);
     return c;
 }
 
@@ -43,7 +42,6 @@ void destroy_instr_array(Instructions *instructs) {
 }
 
 void move(Instructions *instructs, int index) {
-    printf("Moving to %d\n", index);
     instructs->current_instruction = index;
 }
 
@@ -65,8 +63,6 @@ void pop(CallStack **stack) {
         printf("Tried to pop the stack, but it's NULL.\n");
         exit(EXIT_FAILURE);
     }
-
-    printf("POP: %d\n", (*stack)->start);
     
     CallStack *temp = (*stack)->next;
 
